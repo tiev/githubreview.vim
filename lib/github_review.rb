@@ -33,7 +33,11 @@ class GithubReview
     Vim.command 'tabnext' until VIM::Buffer.current == overview_buffer
     Vim.command '%d'
     (
-      ['PULL REQUEST COMMENTS', ''] +
+      [
+        'DESCRIPTION', '',
+        pull_request_data[:body].gsub("\r\n", "\n").split("\n"), '',
+        'PULL REQUEST COMMENTS', ''
+      ].flatten +
      render_comments.split("\n")
     ).each_with_index do |line, idx|
       overview_buffer.append(idx, line)

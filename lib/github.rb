@@ -59,7 +59,8 @@ class Github
       {
         head: data['head']['sha'],
         base: data['base']['sha'],
-        merged: data['merged']
+        merged: data['merged'],
+        body: data['body']
       }
     end
   end
