@@ -70,6 +70,13 @@ class GithubReview
                        else
                          Review::EVENT_COMMENT
                        end
+    if [1, 3].include?(Vim.evaluate('review_event')) && review_obj.body.empty?
+      Vim.command %(echo "NOTE: You must edit review summary for COMMENT and REQUEST_CHANGES review types. Then submit again.")
+      Vim.command %(echo '...')
+      Vim.command 'ruby GithubReview.current.edit_summary'
+      return
+    end
+
     Vim.command %(echo "Submitting code review to Github...")
     result = github.create_review(review_obj)
     Vim.command %(echo "Code Review submitted. ID=#{result[:id]}")
